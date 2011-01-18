@@ -10,8 +10,8 @@ class CommonPrayerWindow(QMainWindow):
 		self._html = QTextBrowser()
 		self.setCentralWidget(self._html)
 
-		self._prev = QAction("<-", self)
-		self._next = QAction("->", self)
+		self._prev = QAction("Previous", self)
+		self._next = QAction("Next", self)
 
 		self.connect(self._prev,
 			SIGNAL('triggered()'),
