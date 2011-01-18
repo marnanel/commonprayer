@@ -83,7 +83,3 @@ class Paging:
 			recipient.take(int(name))
 
 		return recipient.result()
-
-p = Paging('pages')
-print p.scan(NearestPage(0))
-
