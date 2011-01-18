@@ -1,5 +1,6 @@
 import os.path
 import ConfigParser
+import paging
 
 class CommonPrayerModel:
     def __init__(self,
@@ -11,6 +12,18 @@ class CommonPrayerModel:
         self._config.read(self._dir+'/bcp.ini')
 
         self._skeleton = file('%s/skeleton.html' % (source_dir,), 'r').read()
+
+	self._paging = paging.Paging(source_dir)
+
+    def move(self, direction, wrt=0):
+	if direction=='previous':
+		handler = paging.PreviousPage(wrt)
+	elif direction=='next':
+		handler = paging.NextPage(wrt)
+	elif direction=='nearest':
+		handler = paging.NearestPage(wrt)
+
+	return self._paging.scan(handler)
 
     def _named_page_before(self, page):
 	candidate = 0
