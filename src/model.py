@@ -12,15 +12,25 @@ class CommonPrayerModel:
 
         self._skeleton = file('%s/skeleton.html' % (source_dir,), 'r').read()
 
+    def _named_page_before(self, page):
+	candidate = 0
+	name = '(Problem: no name)'
+	page = int(page)
+
+	for named in self._config.sections():
+		if named[0]>='0' and named[0]<='9':
+			n = int(named)
+			if n<page and n>candidate:
+				candidate = n
+				name = self._config.get(named, 'name')
+	return name
+
     def name_of(self, item, add_number = False):
         i = str(item)
         if self._config.has_option(i, 'name'):
             name = self._config.get(i, 'name')
         else:
-            # FIXME: if add_number, find the previous
-            # (have a method to map ints to the previous valid page,
-            # and the last page if there is no previous valid page)
-            name = '(problem: no name)'
+	    name = self._named_page_before(item)
 
         if add_number:
             name = "%s - %s" % (item, name)
