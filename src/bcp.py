@@ -13,7 +13,23 @@ class CommonPrayerApp(QApplication):
 		self._view = CommonPrayerWindow()
 		self._view.showMaximized()
 
-		self.display_page(100)
+		self.connect(self._view,
+			SIGNAL('move(QString)'),
+			self,
+			SLOT('move(QString)'))
+
+		self._page = 100
+		self.display_page(self._page)
+
+	def move(self, direction, wrt=None):
+		if wrt is None:
+			wrt = self._page
+
+		page = self._model.move(direction, wrt)
+
+		self._page = page['page']
+		# FIXME: display the warning, if there was one
+		self.display_page(self._page)
 
 	def display_page(self, page_number):
 		page = self._model[page_number]
