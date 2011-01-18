@@ -93,6 +93,11 @@ def parse_xml(filename):
 
             conf.close()
 
+            readme = file(target+'/README', 'w')
+            readme.write('These are generated from bcp.xml.\n')
+            readme.write('You should not check them in.\n')
+            readme.close()
+
     handler = Handler()
 
     xml.sax.parse(filename, handler)
