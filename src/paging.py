@@ -36,7 +36,7 @@ class PreviousPage:
 			self._highest = number
 
 		if number < self._wrt and (self._candidate is None or number > self._candidate):
-			self._highest = number
+			self._candidate = number
 
 		return False
 
@@ -78,7 +78,7 @@ class Paging:
 
 		for file in glob(self._path):
 			name = file[file.rindex('/')+1:]
-			if '.' in name:
+			if name[0]<'0' or name[0]>'9':
 				continue
 			recipient.take(int(name))
 
