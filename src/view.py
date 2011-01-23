@@ -43,7 +43,7 @@ class CommonPrayerWindow(QMainWindow):
 	def addSection(self, name, number, subsection):
 		"""
 		Adds a new section of the book.
-		cURREntly only supports two levels.
+		Currently only supports two levels.
 
 		name - the name of the section.
 		number - the page number; if -1, represents
