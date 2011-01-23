@@ -1,0 +1,8 @@
+ - make Bible links and page links work
+
+ - gestures for "next" and "previous"
+
+ - "go to page"
+
+ - about box
+
