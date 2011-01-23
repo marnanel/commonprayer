@@ -16,12 +16,21 @@ class CommonPrayerModel:
 	self._paging = paging.Paging(source_dir)
 
     def move(self, direction, wrt=0):
+
+	handler = None
+
 	if direction=='previous':
 		handler = paging.PreviousPage(wrt)
 	elif direction=='next':
 		handler = paging.NextPage(wrt)
 	elif direction=='nearest':
 		handler = paging.NearestPage(wrt)
+	elif direction=='exact':
+		# Maybe check it exists?
+		return { 'page': wrt }
+
+	if handler is None:
+		raise Exception('Mode "%s" is unknown.' % (direction,))
 
 	return self._paging.scan(handler)
 

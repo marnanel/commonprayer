@@ -13,19 +13,43 @@ class CommonPrayerApp(QApplication):
 		self._view = CommonPrayerWindow()
 		self._view.showMaximized()
 
+		self._enumerate_sections()
+
 		self.connect(self._view,
-			SIGNAL('move(QString)'),
+			SIGNAL('jump(QString,int)'),
 			self,
-			SLOT('move(QString)'))
+			SLOT('jump(QString,int)'))
 
 		self._page = 100
 		self.display_page(self._page)
 
-	def move(self, direction, wrt=None):
-		if wrt is None:
+	def _enumerate_sections(self, candidate=None):
+		toplevel = False
+
+		if candidate is None:
+			toplevel = True
+			candidate = self._model[0]['children']
+
+		for page in sorted(candidate.keys()):
+			page_or_placeholder = page
+
+			inner = self._model[page]['children']
+
+			if toplevel and len(inner)!=0:
+				page_or_placeholder = -1
+
+			self._view.addSection(candidate[page],
+				page_or_placeholder,
+				not toplevel)
+
+			if toplevel:
+				self._enumerate_sections(inner)
+
+	def jump(self, mode, wrt=-1):
+		if wrt==-1:
 			wrt = self._page
 
-		page = self._model.move(direction, wrt)
+		page = self._model.move(mode, wrt)
 
 		self._page = page['page']
 		# FIXME: display the warning, if there was one
