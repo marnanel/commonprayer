@@ -6,3 +6,7 @@
 
  - about box
 
+ - display errors when page jumps fail
+
+ - model should know page number, not controller
+
