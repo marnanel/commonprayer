@@ -54,6 +54,10 @@ class CommonPrayerApp(QApplication):
 		# Special case some modes.
 		if mode=='goto':
 			self._gotopage = GoToPage(self._view)
+			self.connect(self._gotopage,
+				SIGNAL("jump(QString,int)"),
+				self,
+				SLOT("jump(QString,int)"))
 			self._gotopage.show()
 			return
 		elif mode=='about':
