@@ -34,6 +34,13 @@ class CommonPrayerWindow(QMainWindow):
 		self._sections = QMenu('Sections')
 		self.menuBar().addMenu(self._sections)
 
+		self._bookmarks = QMenu('Bookmarks')
+		self._bookmarks.addAction(QAction('Not implemented', self))
+		self.menuBar().addMenu(self._bookmarks)
+
+		self.menuBar().addAction(self._jump_action('Go to page...', 'goto'))
+		self.menuBar().addAction(self._jump_action('About...', 'about'))
+
 	def _jump_action(self, name, mode, number=-1):
 		action = JumpAction(name, self, mode, number)
 		self.connect(action, SIGNAL("jump(QString,int)"),

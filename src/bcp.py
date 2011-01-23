@@ -3,6 +3,8 @@ from PySide.QtGui import *
 import sys
 from view import *
 from model import *
+from gotopage import *
+from about import *
 
 class CommonPrayerApp(QApplication):
 	def __init__(self, argv):
@@ -48,6 +50,16 @@ class CommonPrayerApp(QApplication):
 	def jump(self, mode, wrt=-1):
 		if wrt==-1:
 			wrt = self._page
+
+		# Special case some modes.
+		if mode=='goto':
+			self._gotopage = GoToPage(self._view)
+			self._gotopage.show()
+			return
+		elif mode=='about':
+			self._about = About(self._view)
+			self._about.show()
+			return
 
 		page = self._model.move(mode, wrt)
 
